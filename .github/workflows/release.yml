@@ -43,6 +43,7 @@ jobs:
         asset_name: ${{ matrix.asset_name }}
         tag: ${{ github.ref }}
 
+  linux-x86_64-static:
     name: Release Linux static x86_64
     runs-on: ubuntu-latest
     steps:
