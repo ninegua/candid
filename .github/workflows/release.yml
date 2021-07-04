@@ -42,3 +42,25 @@ jobs:
         file: target/release/${{ matrix.artifact_name }}
         asset_name: ${{ matrix.asset_name }}
         tag: ${{ github.ref }}
+
+    name: Release Linux static x86_64
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: gmiam/rust-musl-action@master
+      with:
+        args: cargo build --target x86_64-unknown-linux-musl --release --locked
+    - name: Upload didc binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/x86_64-unknown-linux-musl/release/didc
+        asset_name: didc-linux-musl-x86_64
+        tag: ${{ github.ref }}
+    - name: Upload candiff binaries to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: target/x86_64-unknown-linux-musl/release/candiff
+        asset_name: candiff-linux-musl-x86_64
+        tag: ${{ github.ref }}
